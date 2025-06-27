@@ -1,0 +1,149 @@
+#include <iostream>
+#include <vector>
+#include <string>
+using namespace std;
+
+// Estructura o clase para Contacto
+class Contacto {
+public:
+    string nombre;
+    string telefono;
+    string correo;
+    string direccion;
+
+    // Constructor
+    Contacto(string nom, string tel, string mail, string dir) {
+        nombre = nom;
+        telefono = tel;
+        correo = mail;
+        direccion = dir;
+    }
+
+    // Mostrar información del contacto
+    void mostrar() {
+        cout << "\nNombre: " << nombre;
+        cout << "\nTeléfono: " << telefono;
+        cout << "\nCorreo: " << correo;
+        cout << "\nDirección: " << direccion << "\n";
+    }
+};
+
+// Clase Agenda
+class Agenda {
+private:
+    vector<Contacto> contactos;
+
+public:
+    // Agregar nuevo contacto
+    void agregarContacto() {
+        string nom, tel, mail, dir;
+        cout << "\nIngrese nombre: ";
+        getline(cin, nom);
+        cout << "Ingrese teléfono: ";
+        getline(cin, tel);
+        cout << "Ingrese correo: ";
+        getline(cin, mail);
+        cout << "Ingrese dirección: ";
+        getline(cin, dir);
+
+        Contacto nuevo(nom, tel, mail, dir);
+        contactos.push_back(nuevo);
+        cout << "\nContacto agregado con éxito.\n";
+    }
+
+    // Mostrar todos los contactos
+    void mostrarContactos() {
+        if (contactos.empty()) {
+            cout << "\nNo hay contactos en la agenda.\n";
+            return;
+        }
+
+        cout << "\n--- Lista de Contactos ---\n";
+        for (size_t i = 0; i < contactos.size(); i++) {
+            cout << "\nContacto #" << i + 1;
+            contactos[i].mostrar();
+        }
+    }
+
+    // Buscar contacto por nombre
+    void buscarContacto() {
+        string nom;
+        cout << "\nIngrese el nombre a buscar: ";
+        getline(cin, nom);
+        bool encontrado = false;
+
+        for (auto& c : contactos) {
+            if (c.nombre == nom) {
+                cout << "\nContacto encontrado:";
+                c.mostrar();
+                encontrado = true;
+                break;
+            }
+        }
+
+        if (!encontrado) {
+            cout << "\nContacto no encontrado.\n";
+        }
+    }
+
+    // Eliminar contacto por nombre
+    void eliminarContacto() {
+        string nom;
+        cout << "\nIngrese el nombre del contacto a eliminar: ";
+        getline(cin, nom);
+
+        for (auto it = contactos.begin(); it != contactos.end(); ++it) {
+            if (it->nombre == nom) {
+                contactos.erase(it);
+                cout << "\nContacto eliminado correctamente.\n";
+                return;
+            }
+        }
+
+        cout << "\nContacto no encontrado.\n";
+    }
+};
+
+// Menú principal
+int main() {
+    Agenda miAgenda;
+    int opcion;
+    string pausa;
+
+    do {
+        cout << "\n----- Agenda Telefónica -----\n";
+        cout << "1. Agregar contacto\n";
+        cout << "2. Mostrar contactos\n";
+        cout << "3. Buscar contacto\n";
+        cout << "4. Eliminar contacto\n";
+        cout << "5. Salir\n";
+        cout << "Seleccione una opción: ";
+        cin >> opcion;
+        cin.ignore(); // Limpiar buffer de entrada
+
+        switch (opcion) {
+        case 1:
+            miAgenda.agregarContacto();
+            break;
+        case 2:
+            miAgenda.mostrarContactos();
+            break;
+        case 3:
+            miAgenda.buscarContacto();
+            break;
+        case 4:
+            miAgenda.eliminarContacto();
+            break;
+        case 5:
+            cout << "\nGracias por usar la Agenda.\n";
+            break;
+        default:
+            cout << "\nOpción no válida.\n";
+        }
+
+        cout << "\nPresione Enter para continuar...";
+        getline(cin, pausa);
+    } while (opcion != 5);
+
+    return 0;
+}
