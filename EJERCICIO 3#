@@ -1,0 +1,57 @@
+using System;
+using System.Collections.Generic;
+
+class Program
+{
+    static void Main()
+    {
+        // Lista inicial de asignaturas
+        List<string> asignaturas = new List<string>
+        {
+            "Matemáticas",
+            "Física",
+            "Química",
+            "Historia",
+            "Lengua"
+        };
+
+        // Lista para asignaturas reprobadas
+        List<string> asignaturasReprobadas = new List<string>();
+
+        Console.WriteLine("Ingrese la nota obtenida (de 0 a 10) en cada asignatura:\n");
+
+        foreach (string asignatura in asignaturas)
+        {
+            double nota;
+            Console.Write($"Nota de {asignatura}: ");
+            
+            while (!double.TryParse(Console.ReadLine(), out nota) || nota < 0 || nota > 10)
+            {
+                Console.Write("Nota inválida. Ingrese un valor entre 0 y 10: ");
+            }
+
+            if (nota < 7)
+            {
+                asignaturasReprobadas.Add(asignatura);
+            }
+        }
+
+        // Mostrar resultados
+        Console.WriteLine("\nAsignaturas que debes repetir:");
+
+        if (asignaturasReprobadas.Count == 0)
+        {
+            Console.WriteLine("¡Felicidades! Has aprobado todas las asignaturas.");
+        }
+        else
+        {
+            foreach (string asignatura in asignaturasReprobadas)
+            {
+                Console.WriteLine($"- {asignatura}");
+            }
+        }
+
+        Console.WriteLine("\nPresione cualquier tecla para salir...");
+        Console.ReadKey();
+    }
+}

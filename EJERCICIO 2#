@@ -1,0 +1,46 @@
+using System;
+using System.Collections.Generic;
+
+class Program
+{
+    static void Main()
+    {
+        List<int> numerosLoteria = new List<int>();
+        int cantidad = 6;
+
+        Console.WriteLine($"Ingrese los {cantidad} números ganadores de la lotería primitiva:");
+
+        for (int i = 1; i <= cantidad; i++)
+        {
+            int numero;
+            Console.Write($"Número {i}: ");
+
+            while (!int.TryParse(Console.ReadLine(), out numero) || numero < 1 || numero > 49)
+            {
+                Console.Write("Entrada no válida. Ingrese un número entre 1 y 49: ");
+            }
+
+            // Verificar si el número ya fue ingresado
+            if (numerosLoteria.Contains(numero))
+            {
+                Console.WriteLine("Ese número ya fue ingresado. Intente con uno diferente.");
+                i--; // Repetir la misma posición
+            }
+            else
+            {
+                numerosLoteria.Add(numero);
+            }
+        }
+
+        numerosLoteria.Sort(); // Ordenar de menor a mayor
+
+        Console.WriteLine("\nNúmeros ganadores ordenados:");
+        foreach (int num in numerosLoteria)
+        {
+            Console.Write($"{num} ");
+        }
+
+        Console.WriteLine("\n\nPresione cualquier tecla para salir...");
+        Console.ReadKey();
+    }
+}

@@ -1,0 +1,31 @@
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        string[] asignaturas = { "Matemáticas", "Física", "Química", "Historia", "Lengua" };
+        double[] notas = new double[asignaturas.Length];
+
+        Console.WriteLine("Ingrese la nota obtenida en cada asignatura:\n");
+
+        for (int i = 0; i < asignaturas.Length; i++)
+        {
+            Console.Write($"Nota de {asignaturas[i]}: ");
+            while (!double.TryParse(Console.ReadLine(), out notas[i]))
+            {
+                Console.Write("Entrada no válida. Ingrese una nota numérica: ");
+            }
+        }
+
+        Console.WriteLine("\nResumen de notas:");
+        for (int i = 0; i < asignaturas.Length; i++)
+        {
+            Console.WriteLine($"En {asignaturas[i]} has sacado {notas[i]}");
+        }
+
+        Console.WriteLine("\nPresione cualquier tecla para salir...");
+        Console.ReadKey();
+    }
+}
+
